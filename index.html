@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -173,6 +172,26 @@
             opacity: 0.7;
         }
 
+        .remover-ideia {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cartao-ideia:hover .remover-ideia {
+            opacity: 1;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -200,7 +219,6 @@
             }
         }
 
-        /* Efeito de onda ao clicar nos cartões */
         .ripple {
             position: absolute;
             border-radius: 50%;
@@ -217,7 +235,6 @@
             }
         }
 
-        /* Responsividade */
         @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
@@ -232,10 +249,7 @@
             }
         }
     </style>
-    <link rel="shortcut icon" type="img/png"
-        href="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTYCYgNC-YX-AL8k46jyDh37VEYZMIo2XPt6QI2Swqc5VZqTr2HM_SC1oXCNGGCu7SUxS4o" />
 </head>
-
 <body>
     <div class="container">
         <header>
@@ -265,11 +279,41 @@
     </div>
 
     <script>
-        document.getElementById('inputIdeia').addEventListener('keypress', function (event) {
+        const DB_NAME = "mural_de_ideias";
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarIdeias();
+        });
+
+        document.getElementById('inputIdeia').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 AdicionarIdeia();
             }
         });
+
+        function carregarIdeias() {
+            const ideiasSalvas = localStorage.getItem(DB_NAME);
+            if (ideiasSalvas) {
+                const ideias = JSON.parse(ideiasSalvas);
+                ideias.forEach(ideia => {
+                    criarCartaoIdeia(ideia.texto, ideia.cor);
+                });
+            }
+        }
+
+        function salvarIdeias() {
+            const cartoes = document.querySelectorAll('.cartao-ideia');
+            const ideias = [];
+            
+            cartoes.forEach(cartao => {
+                ideias.push({
+                    texto: cartao.textContent,
+                    cor: cartao.style.borderLeftColor
+                });
+            });
+            
+            localStorage.setItem(DB_NAME, JSON.stringify(ideias));
+        }
 
         function AdicionarIdeia() {
             const input = document.getElementById('inputIdeia');
@@ -281,12 +325,19 @@
                 return;
             }
 
+            const cor = corAleatoria();
+            criarCartaoIdeia(ideia, cor);
+            input.value = '';
+            input.focus();
+            salvarIdeias();
+        }
+
+        function criarCartaoIdeia(texto, cor) {
             const cartaoideia = document.createElement('div');
             cartaoideia.className = 'cartao-ideia';
-            cartaoideia.style.borderLeftColor = corAleatoria();
-            cartaoideia.textContent = ideia;
+            cartaoideia.style.borderLeftColor = cor;
+            cartaoideia.textContent = texto;
 
-            // Adiciona efeito de clique (ripple)
             cartaoideia.addEventListener('click', function(e) {
                 const ripple = document.createElement('span');
                 ripple.className = 'ripple';
@@ -303,9 +354,17 @@
                 }, 600);
             });
 
+            const btnRemover = document.createElement('button');
+            btnRemover.innerHTML = '×';
+            btnRemover.className = 'remover-ideia';
+            btnRemover.onclick = function(e) {
+                e.stopPropagation();
+                cartaoideia.remove();
+                salvarIdeias();
+            };
+            
+            cartaoideia.appendChild(btnRemover);
             document.getElementById('Mural').appendChild(cartaoideia);
-            input.value = '';
-            input.focus();
         }
 
         function limparIdeias() {
@@ -313,6 +372,7 @@
             if (mural.children.length > 0) {
                 if (confirm('Tem certeza que deseja remover todas as ideias?')) {
                     mural.innerHTML = '';
+                    localStorage.removeItem(DB_NAME);
                 }
             } else {
                 alert('O mural já está vazio!');
@@ -330,5 +390,4 @@
         }
     </script>
 </body>
-
 </html>
