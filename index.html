@@ -6,109 +6,265 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mural de Idéias</title>
     <style>
-        html {
-            padding: 0%;
-            margin: 0%;
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --danger-color: #f72585;
+            --success-color: #4ad66d;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: cursive;
-            background-color: #f0f8ff;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        header {
             text-align: center;
+            margin-bottom: 2.5rem;
+            animation: fadeInDown 0.8s ease;
         }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
         #área-dados {
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.8s ease 0.2s both;
         }
 
+        @media (min-width: 768px) {
+            #área-dados {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
 
+        #inputIdeia {
+            flex-grow: 1;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            transition: var(--transition);
+            outline: none;
+        }
 
-
-        #área-dados input {
-            width: 60%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        #inputIdeia:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
         }
 
         #área-dados button {
-            padding: 10px 15px;
-            font-size: 16px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
             border: none;
-            color: white;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-left: 10px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
-        #área-dados .limpar {
-            background-color: red;
-            color: black;
+        #área-dados button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
-        #área-dados #Adicionar {
-            background-color: chartreuse;
-            color: black;
+        #área-dados button:active {
+            transform: translateY(0);
+        }
+
+        #Adicionar {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        #Adicionar:hover {
+            background-color: #3ac45a;
+        }
+
+        .limpar {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .limpar:hover {
+            background-color: #e5177e;
         }
 
         #Mural {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
         }
 
-
         .cartao-ideia {
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px 2px rgba(0, 0, 0, 0.1);
-            width: 200px;
-            opacity: 1;
-            /*word-break: break-all; 
-            Quebra a palavra no meio caso necessário*/
-            white-space: break-spaces;
-            animation: fadeIn 1s forwards;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+            border-left: 5px solid;
+            cursor: pointer;
+        }
+
+        .cartao-ideia:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .cartao-ideia::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            opacity: 0.7;
         }
 
         @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Efeito de onda ao clicar nos cartões */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            #área-dados {
+                flex-direction: column;
+            }
+            
+            #área-dados button {
+                width: 100%;
+            }
+        }
     </style>
     <link rel="shortcut icon" type="img/png"
         href="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTYCYgNC-YX-AL8k46jyDh37VEYZMIo2XPt6QI2Swqc5VZqTr2HM_SC1oXCNGGCu7SUxS4o" />
-
-        <link rel="background-im"
-
 </head>
 
 <body>
-    <h1>Mural de Idéias</h1>
-    <h2>Crie suas ideias e salve por aqui</h2>
-    <div class="área-dados" id="área-dados">
-        <input type="text" id="inputIdeia" placeholder="Digite suas ideias">
-        <button onclick="AdicionarIdeia()" type="submit" id="Adicionar">Adicionar</button>
-        <button onclick="limparIdeias()" class="limpar">Remover Tudo</button>
+    <div class="container">
+        <header>
+            <h1>Mural de Idéias</h1>
+            <h2>Crie e organize suas ideias criativas</h2>
+        </header>
+        
+        <div class="área-dados" id="área-dados">
+            <input type="text" id="inputIdeia" placeholder="Digite sua ideia...">
+            <button onclick="AdicionarIdeia()" type="submit" id="Adicionar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+                Adicionar
+            </button>
+            <button onclick="limparIdeias()" class="limpar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg>
+                Remover Tudo
+            </button>
+        </div>
 
-
-        </style>
-
+        <div id="Mural"></div>
     </div>
 
-    <div id="Mural"></div>
-
     <script>
-
         document.getElementById('inputIdeia').addEventListener('keypress', function (event) {
             if (event.key === 'Enter') {
                 AdicionarIdeia();
@@ -116,38 +272,62 @@
         });
 
         function AdicionarIdeia() {
-            const input = document.getElementById('inputIdeia')
-            const ideia = input.value
+            const input = document.getElementById('inputIdeia');
+            const ideia = input.value.trim();
 
             if (ideia === '') {
-                alert('a ideia não pode ser vazia')
-                return
+                alert('Por favor, digite uma ideia antes de adicionar.');
+                input.focus();
+                return;
             }
 
+            const cartaoideia = document.createElement('div');
+            cartaoideia.className = 'cartao-ideia';
+            cartaoideia.style.borderLeftColor = corAleatoria();
+            cartaoideia.textContent = ideia;
 
-            const cartaoideia = document.createElement('div')
-            cartaoideia.className = 'cartao-ideia'
-            cartaoideia.style.borderLeft = `5px solid ${corAleatoria()}`
-            cartaoideia.textContent = ideia
+            // Adiciona efeito de clique (ripple)
+            cartaoideia.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                this.appendChild(ripple);
+                
+                const x = e.clientX - e.target.getBoundingClientRect().left;
+                const y = e.clientY - e.target.getBoundingClientRect().top;
+                
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
 
-            document.getElementById('Mural').appendChild(cartaoideia)
-            input.value = ''
+            document.getElementById('Mural').appendChild(cartaoideia);
+            input.value = '';
+            input.focus();
         }
 
         function limparIdeias() {
-            document.getElementById('Mural').innerHTML = ''
-        }
-        function corAleatoria() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)]
+            const mural = document.getElementById('Mural');
+            if (mural.children.length > 0) {
+                if (confirm('Tem certeza que deseja remover todas as ideias?')) {
+                    mural.innerHTML = '';
+                }
+            } else {
+                alert('O mural já está vazio!');
             }
-            return color;
         }
 
-
-
+        function corAleatoria() {
+            const colors = [
+                '#4361ee', '#3f37c9', '#4cc9f0', '#4895ef',
+                '#f72585', '#b5179e', '#7209b7', '#560bad',
+                '#4ad66d', '#2d6a4f', '#40916c', '#52b788',
+                '#ff9e00', '#ff9100', '#ff8500', '#ff7900'
+            ];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
     </script>
 </body>
 
