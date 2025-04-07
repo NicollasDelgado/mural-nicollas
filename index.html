@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mural de Idéias</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-      :root {
-        --background-light: #ffffff;
-        --background-dark: #333333;
-        --text-light: #000000;
-        --text-dark: #ffffff;
-      }
-        
+        :root {
+            --background-light: #ffffff;
+            --background-dark: #333333;
+            --text-light: #000000;
+            --text-dark: #ffffff;
+        }
+
         :root {
             --primary-color: #4361ee;
             --secondary-color: #3f37c9;
@@ -24,7 +25,7 @@
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
-        
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -41,35 +42,31 @@
         }
 
         body.dark-mode {
-      background-color: var(--background-dark);
-      color: var(--text-dark);
-    }
+            background: var(--background-dark);
+            color: var(--text-dark);
+        }
 
-    #toggle-mode {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: transparent;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      z-index: 1000;
-    }
+        #toggle-mode {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
 
-    #toggle-mode:hover {
-      transform: scale(1.1);
-    }
+        #toggle-mode:hover {
+            transform: scale(1.1);
+        }
 
-    /* Animação para o ícone (mudança entre sol e lua) */
-    #icon {
-      transition: transform 0.3s ease;
-    }
+        /* Animação para o ícone (mudança entre sol e lua) */
 
-    #toggle-mode.dark-mode #icon {
-      transform: rotate(180deg); /* Faz o ícone girar */
-    }
-
+        #toggle-mode.dark-mode #icon {
+            transform: rotate(180deg);
+        }
 
         .container {
             max-width: 1200px;
@@ -232,8 +229,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes fadeInUp {
@@ -241,6 +243,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -252,6 +255,7 @@
                 opacity: 0;
                 transform: translateY(-20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -278,53 +282,60 @@
             h1 {
                 font-size: 2rem;
             }
-            
+
             #área-dados {
                 flex-direction: column;
             }
-            
+
             #área-dados button {
                 width: 100%;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1>Mural de Idéias</h1>
             <h2>Crie e organize suas ideias criativas</h2>
         </header>
-        
+
         <div class="área-dados" id="área-dados">
             <input type="text" id="inputIdeia" placeholder="Digite sua ideia...">
             <button onclick="AdicionarIdeia()" type="submit" id="Adicionar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path
+                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                 </svg>
                 Adicionar
             </button>
             <button onclick="limparIdeias()" class="limpar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    <path
+                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path fill-rule="evenodd"
+                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                 </svg>
                 Remover Tudo
             </button>
         </div>
 
         <div id="Mural"></div>
+        <button id="toggle-mode" onclick="toggleTheme()">
+            <i id="icon" class="fas fa-sun"></i>
+        </button>
     </div>
 
     <script>
         const DB_NAME = "mural_de_ideias";
-        
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', function () {
             carregarIdeias();
         });
 
-        document.getElementById('inputIdeia').addEventListener('keypress', function(event) {
+        document.getElementById('inputIdeia').addEventListener('keypress', function (event) {
             if (event.key === 'Enter') {
                 AdicionarIdeia();
             }
@@ -343,14 +354,14 @@
         function salvarIdeias() {
             const cartoes = document.querySelectorAll('.cartao-ideia');
             const ideias = [];
-            
+
             cartoes.forEach(cartao => {
                 ideias.push({
                     texto: cartao.textContent,
                     cor: cartao.style.borderLeftColor
                 });
             });
-            
+
             localStorage.setItem(DB_NAME, JSON.stringify(ideias));
         }
 
@@ -377,17 +388,17 @@
             cartaoideia.style.borderLeftColor = cor;
             cartaoideia.textContent = texto;
 
-            cartaoideia.addEventListener('click', function(e) {
+            cartaoideia.addEventListener('click', function (e) {
                 const ripple = document.createElement('span');
                 ripple.className = 'ripple';
                 this.appendChild(ripple);
-                
+
                 const x = e.clientX - e.target.getBoundingClientRect().left;
                 const y = e.clientY - e.target.getBoundingClientRect().top;
-                
+
                 ripple.style.left = `${x}px`;
                 ripple.style.top = `${y}px`;
-                
+
                 setTimeout(() => {
                     ripple.remove();
                 }, 600);
@@ -396,12 +407,12 @@
             const btnRemover = document.createElement('button');
             btnRemover.innerHTML = '×';
             btnRemover.className = 'remover-ideia';
-            btnRemover.onclick = function(e) {
+            btnRemover.onclick = function (e) {
                 e.stopPropagation();
                 cartaoideia.remove();
                 salvarIdeias();
             };
-            
+
             cartaoideia.appendChild(btnRemover);
             document.getElementById('Mural').appendChild(cartaoideia);
         }
@@ -427,6 +438,15 @@
             ];
             return colors[Math.floor(Math.random() * colors.length)];
         }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('icon');
+            icon.classList.toggle('fa-sun');
+            icon.classList.toggle('fa-moon');
+        }
+
     </script>
 </body>
+
 </html>
