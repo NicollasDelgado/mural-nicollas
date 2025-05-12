@@ -24,8 +24,10 @@
             --dark-color: #212529;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
+            --titulo-gradiente-light: radial-gradient(circle, #1dffe1 10%,#077e2f 60%);
+            --titulo-gradiente-dark: linear-gradient(to top,#0bff71 10%,#01ffff 60%);
         }
-
+    
         * {
             box-sizing: border-box;
             margin: 0;
@@ -93,6 +95,19 @@
             margin-bottom: 0.5rem;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+             /* Aplicando o degradê */
+            background: var(--titulo-gradiente-light);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: background 0.3s ease;
+        }
+        /* Mudando o degradê do título no modo escuro */
+        body.dark-mode h1 {
+            background: var(--titulo-gradiente-dark);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         h2 {
